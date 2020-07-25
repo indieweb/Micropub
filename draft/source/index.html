@@ -5,17 +5,15 @@
     <meta charset='utf-8'>
     <script src='https://www.w3.org/Tools/respec/respec-w3c-common' async class='remove'></script>
     <script src='add-paragraph-ids.js' class='remove'></script>
+    <script src='indieweb-cleanup.js' class='remove'></script>
     <script class='remove'>
       var respecConfig = {
           useExperimentalStyles: true,
-          publishDate: "2017-05-21",
-          specStatus: "ED",
-          previousMaturity: "PR",
-          previousPublishDate: "2017-04-13",
-          crEnd: "2016-11-15",
-          prEnd: "2017-05-11",
+          publishDate: "2020-07-25",
+          specStatus: "LS",
+          previousMaturity: "REC",
+          previousPublishDate: "2017-05-23",
           shortName:  "micropub",
-          edDraftURI: "https://micropub.net/draft/",
           testSuiteURI: "https://micropub.rocks/",
           implementationReportURI: "https://micropub.net/implementation-reports/",
           editors: [
@@ -28,22 +26,22 @@
           wgPublicList: "public-socialweb",
           wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/72531/status",
           errata: "https://micropub.net/errata/",
-          license: "w3c-software-doc",
-          postProcess: [addParagraphIDs],
+          license: "cc0",
+          postProcess: [addParagraphIDs, indiewebCleanup],
           otherLinks: [{
             key: 'Repository',
             data: [
               {
                 value: 'Github',
-                href: 'https://github.com/w3c/micropub'
+                href: 'https://github.com/indieweb/micropub'
               },
               {
                 value: 'Issues',
-                href: 'https://github.com/w3c/micropub/issues'
+                href: 'https://github.com/indieweb/Micropub/issues'
               },
               {
                 value: 'Commits',
-                href: 'https://github.com/w3c/micropub/commits/master'
+                href: 'https://github.com/indieweb/Micropub/commits/main'
               }
             ]
           }],
@@ -134,9 +132,10 @@
 
       <section id="authorsnote" class="informative">
         <h2>Author's Note</h2>
-        <p>This specification was contributed to the W3C from the
-          <a href="https://indieweb.org/">IndieWeb</a> community. More
-          history and evolution of Micropub can be found on the
+        <p>This specification was originally developed by the
+          <a href="https://indieweb.org/">IndieWeb</a> community,
+          and was formalized and standardized in the W3C <a href="https://www.w3.org/Social/WG">Social Web Working Group</a> between 2014 and 2018. After the conclusion of the Social Web Working Group, the author has agreed to bring the spec back to the IndieWeb community for further iteration and development. 
+          More history and evolution of Micropub can be found on the
           <a href="https://indieweb.org/micropub">IndieWeb wiki</a>.</p>
       </section>
     </section>
@@ -148,12 +147,6 @@
       <h2>Introduction</h2>
 
       <p>Micropub is a spec to create, update and delete posts on a server using web or native app clients. Micropub is primarily focused around creating "posts" (individual pieces of content such as blog posts, photos, short notes, comments, and more) on a website, although it can be used for other kinds of content as well. The Micropub spec defines a simple mechanism to create content, as well as a more thorough mechanism to update and delete content.</p>
-
-      <section>
-        <h3>Social Web Working Group</h3>
-
-        <p>Micropub is one of several related specifications being produced by the Social Web Working Group. Implementers interested in alternative approaches and complementary protocols should review <a href="https://www.w3.org/TR/activitypub/">ActivityPub</a> as well as the overview document [[social-web-protocols]].</p>
-      </section>
 
       <section>
         <h3>Background</h3>
@@ -171,7 +164,7 @@
 
     </section>
 
-    <section>
+    <section class="normative" id="conformance">
       <h2>Conformance</h2>
 
       <p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -224,91 +217,6 @@
       </section>
 
       <section>
-        <h3>Candidate Recommendation Exit Criteria</h3>
-
-        <p>This specification exited CR by there being least two independent, interoperable implementations of each feature. Each feature may be implemented by a different set of products. There is no requirement that all features be implemented by a single product. For the purposes of this criterion, we define the following terms:</p>
-
-        <section>
-          <h4>Client</h4>
-
-          <p>A Micropub Client is an implementation that sends Micropub requests to create or otherwise manipulate posts. The conformance criteria are described in <a href="#conformance-classes">Conformance Classes</a> above.</p>
-        </section>
-
-        <section>
-          <h4>Server</h4>
-
-          <p>A Micropub Server is an implementation that can create and optionally edit and delete posts given a Micropub request. The Micropub server MAY also support a Media Endpoint for handling file uploads outside of the primary Micropub endpoint. The conformance criteria are described in <a href="#conformance-classes">Conformance Classes</a> above.</p>
-        </section>        
-
-        <section>
-          <h4>Independent</h4>
-
-          <p>Each implementation must be developed by a different party and cannot share, reuse, or derive from code used by another qualifying implementation. Sections of code that have no bearing on the implementation of this specification are exempt from this requirement.</p>
-        </section>
-
-        <section>
-          <h4>Interoperable</h4>
-
-          <p>A Client and Server implementation are considered interoperable for a specific feature when the Server takes the defined action that the Client requests, the Client gets the expected response from a Server according to the feature, and the Server sends the expected response to the Client.</p>
-        </section>
-
-        <section>
-          <h4>Implementation</h4>
-
-          <p>An Implementation is a Micropub Client or Server which meets all of the following criteria:</p>
-
-          <ul>
-            <li>implements the corresponding conformance class of the specification</li>
-            <li>is available to the general public, as downloadable software or as a hosted service</li>
-            <li>is not experimental (i.e. is intended for a wide audience and could be used on a daily basis)</li>
-            <li>is suitable for a person to use as his/her primary implementation on a website</li>
-          </ul>
-        </section>
-
-        <section>
-          <h4>Feature</h4>
-
-          <p>For the purposes of evaluating exit criteria, each of the following is considered a feature:</p>
-
-          <ul>
-            <li>Discovering the Micropub endpoint given the profile URL of a user</li>
-            <li>Authenticating requests by including the access token in the HTTP <code>Authorization</code> header</li>
-            <li>Authenticating requests by including the access token in the post body for <code>x-www-form-urlencoded</code> requests</li>
-            <li>Limiting the ability to create posts given an access token by requiring that the access token contain at least one OAuth 2.0 scope value</li>
-            <li>Creating a post using <code>x-www-form-urlencoded</code> syntax with one or more properties</li>
-            <li>Creating a post using JSON syntax with one or more properties</li>
-            <li>Creating a post using <code>x-www-form-urlencoded</code> syntax with multiple values of the same property name</li>
-            <li>Creating a post using JSON syntax with multiple values of the same property name</li>
-            <li>Creating a post using JSON syntax including a nested Microformats2 object</li>
-            <li>Uploading a file to the specified Media Endpoint</li>
-            <li>Creating a post with a file by sending the request as <code>multipart/form-data</code> to the Micropub endpoint</li>
-            <li>Creating a post with a photo referenced by URL</li>
-            <li>Creating a post with a photo referenced by URL that includes image alt text</li>
-            <li>Creating a post where the request contains properties the server does not recognize</li>
-            <li>Returning <code>HTTP 201 Created</code> and a <code>Location</code> header when creating a post</li>
-            <li>Returning <code>HTTP 202 Created</code> and a <code>Location</code> header when creating a post</li>
-            <li>Updating a post and replacing all values of a property</li>
-            <li>Updating a post and adding a value to a property</li>
-            <li>Updating a post and removing a value from a property</li>
-            <li>Updating a post and removing a property</li>
-            <li>Returning <code>HTTP 200 OK</code> when updating a post</li>
-            <li>Returning <code>HTTP 201 Created</code> when updating a post if the update cause the post URL to change</li>
-            <li>Returning <code>HTTP 204 No Content</code> when updating a post</li>
-            <li>Deleting a post using <code>x-www-form-urlencoded</code> syntax</li>
-            <li>Deleting a post using JSON syntax</li>
-            <li>Undeleting a post using <code>x-www-form-urlencoded</code> syntax</li>
-            <li>Undeleting a post using JSON syntax</li>
-            <li>Uploading a photo to the Media Endpoint and using the resulting URL when creating a post</li>
-            <li>Querying the Micropub endpoint with <code>q=config</code> to retrieve the Media Endpoint and syndication targets if specified</li>
-            <li>Querying the Micropub endpoint with <code>q=syndicate-to</code> to retrieve the list of syndication targets</li>
-            <li>Querying the Micropub endpoint for a post's source content without specifying a list of properties</li>
-            <li>Querying the Micropub endpoint for a post's source content looking only for specific properties</li>
-          </ul>
-
-        </section>
-      </section>
-
-      <section>
         <h3>Test Suite and Reporting</h3>
 
         <p>Please submit your implementation reports at <a href="https://micropub.net/implementation-reports/">https://micropub.net/implementation-reports/</a>. Instructions are provided at the URL. The implementation report template references the tests available at <a href="https://micropub.rocks/">micropub.rocks</a>.</p>
@@ -318,7 +226,7 @@
 
     </section> <!-- Conformance -->      
 
-    <section>
+    <section class="normative">
       <h2>Syntax</h2>
 
       <p>As [[microformats2-parsing]] has a relatively small ruleset for parsing
@@ -1212,7 +1120,7 @@ $_FILES['audio']</pre></p>
 
     </section> <!-- Vocabulary -->
 
-    <section>
+    <section class="normative">
       <h2>Authentication and Authorization</h2>
 
       <section>
@@ -1335,7 +1243,7 @@ $_FILES['audio']</pre></p>
       </section>
     </section>
 
-    <section>
+    <section class="normative">
       <h2>IANA Considerations</h2>
       <p>The link relation type below has been registered by IANA per Section 6.2.1 of [[!RFC5988]]:</p>
       <dl>
@@ -1421,9 +1329,22 @@ $_FILES['audio']</pre></p>
       <h2>Change Log</h2>
 
       <section>
+        <h3>Changes from 23 May 2017 REC to this version</h3>
+        <p>This section lists changes from the <a href="https://www.w3.org/TR/micropub/">W3C 23 May 2017 REC</a> to this version.</p>
+
+        <h4>Non-Normative Changes</h4>
+        <ul>
+          <li>Added note that deleting properties and values of a property are not supported in a single operatino</li>
+          <li>Clarified JSON POST wording</li>
+          <li>Fixed link to HTML forms spec</li>
+          <li>Minor typo fixes</li>
+        </ul>
+      </section>
+
+      <section>
         <h3>Changes from 13 April 2017 PR to this version</h3>
 
-        <p>This section lists changes from the <a href="https://www.w3.org/TR/2017/PR-micropub-20170413/">13 April 2017 PR</a> to this version.</p>
+        <p>This section lists changes from the <a href="https://www.w3.org/TR/2017/PR-micropub-20170413/">13 April 2017 PR</a> to the <a href="https://www.w3.org/TR/micropub/">23 May 2017 REC</a>.</p>
 
         <h4>Non-Normative Changes</h4>
         <ul>
