@@ -1,5 +1,4 @@
 function indiewebCleanup() {
-
 	// Replace W3C logo with IndieWebCamp logo
 	$(".head .logo img").attr("src", "https://spec.indieweb.org/index_files/logo.svg");
 	$(".head .logo img").attr("width", "120").attr("height", "100");
@@ -24,5 +23,4 @@ function indiewebCleanup() {
 	$(".head dl dd:nth-of-type(2)").remove();
 
 	$("body").css("background-image", "none");
-
 }
