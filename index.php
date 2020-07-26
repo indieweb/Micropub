@@ -59,8 +59,8 @@
   
   <ul class="links">
     <li class="main">
-      <a href="https://www.w3.org/TR/micropub/">w3.org/TR/micropub</a>
-      <br>W3C Recommendation
+      <a href="https://micropub.spec.indieweb.org/">micropub.spec.indieweb.org</a>
+      <br>Living Standard
     </li>
     <li class="main">
       <a href="https://micropub.rocks/">micropub.rocks</a>
@@ -68,8 +68,11 @@
       Test suite and debugging utility
     </li>
     <li class="main"><a href="/implementation-reports/">Implementation Reports</a></li>
-    <li>The Micropub specification is developed under the <a href="https://www.w3.org/wiki/Socialwg">W3C Social Web Working Group</a>.</li>
-    <li>The specification was contributed to the W3C by the IndieWeb community. More information and history of the spec can be found on the <a href="https://indieweb.org/micropub">IndieWeb wiki</a>.</li>
+    <li>This specification was originally developed by the IndieWeb community, and was formalized and standardized in the 
+      <a href="https://www.w3.org/wiki/Socialwg">W3C Social Web Working Group</a> between 2014 and 2018. 
+      After the conclusion of the Social Web Working Group, the spec was brought back into the IndieWeb community 
+      for further iteration and development. More history and evolution of Micropub can be found on the 
+      <a href="https://indieweb.org/Micropub">IndieWeb wiki</a>.</li>
   </ul>
   
 </div>
